@@ -1,0 +1,133 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+
+  /* Light "warm parchment" palette (default). The dark palette overrides these under [data-theme='dark'] below. */
+  --color-bg: #faf5ec;
+  --color-surface: #fffdf8;
+  --color-border: #e6dccb;
+  --color-text: #2b2118;
+  --color-muted: #7a6a58;
+  --color-primary: #8c2f39;
+  --color-accent: #c8963e;
+  --color-danger: #b42318;
+  /* Text/icons placed on a primary, accent or danger fill. */
+  --color-on-primary: #ffffff;
+  /* Modal backdrop and the book-card hover wash. */
+  --color-backdrop: rgb(43 33 24 / 0.4);
+  --color-overlay: rgb(140 47 57 / 0.55);
+
+  --animate-rise: rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-fade: fade 0.25s ease-out both;
+  --animate-pop: pop 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-slide-in: slide-in 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-shimmer: shimmer 1.4s ease-in-out infinite;
+  --animate-twinkle: twinkle 1.2s ease-in-out infinite;
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes pop {
+    from { opacity: 0; transform: scale(0.94) translateY(8px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  @keyframes slide-in {
+    from { opacity: 0; transform: translateX(24px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes shimmer {
+    from { background-position: 100% 0; }
+    to { background-position: -100% 0; }
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.6; transform: scale(0.9) rotate(0deg); }
+    50% { opacity: 1; transform: scale(1.15) rotate(15deg); }
+  }
+}
+
+@layer components {
+  /* Skeleton bar with a gold sweep, used while AI text is being generated. Pair with `animate-shimmer`. */
+  .ai-shimmer {
+    background: linear-gradient(
+        90deg,
+        var(--color-border) 25%,
+        color-mix(in srgb, var(--color-accent) 45%, var(--color-border)) 50%,
+        var(--color-border) 75%
+      )
+      0 0 / 200% 100%;
+  }
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+    --glow-gold: rgb(200 150 62 / 0.14);
+    --glow-rose: rgb(140 47 57 / 0.08);
+    --search-clear-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M6 6l12 12M18 6L6 18'/%3E%3C/svg%3E");
+    --search-clear-icon-hover: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M6 6l12 12M18 6L6 18'/%3E%3C/svg%3E");
+  }
+
+  /* Dark "library at night" palette: warm near-black paper, cream ink, rose + gold highlights.
+     Fills (primary/accent/danger) are light here, so text on them is dark. */
+  :root[data-theme='dark'] {
+    color-scheme: dark;
+    --color-bg: #14110f;
+    --color-surface: #1d1916;
+    --color-border: #3a3029;
+    --color-text: #ede4d6;
+    --color-muted: #a39380;
+    --color-primary: #e0707a;
+    --color-accent: #e0b05c;
+    --color-danger: #f0625a;
+    --color-on-primary: #1a1210;
+    --color-backdrop: rgb(0 0 0 / 0.6);
+    --color-overlay: rgb(20 17 15 / 0.65);
+    --glow-gold: rgb(224 176 92 / 0.1);
+    --glow-rose: rgb(224 112 122 / 0.08);
+    --search-clear-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ede4d6' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M6 6l12 12M18 6L6 18'/%3E%3C/svg%3E");
+    --search-clear-icon-hover: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231a1210' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M6 6l12 12M18 6L6 18'/%3E%3C/svg%3E");
+  }
+
+  body {
+    @apply bg-bg font-sans text-text antialiased;
+    background-image:
+      radial-gradient(60rem 30rem at 85% -10%, var(--glow-gold), transparent),
+      radial-gradient(50rem 28rem at -10% 0%, var(--glow-rose), transparent);
+    background-attachment: fixed;
+  }
+  h1, h2, h3 { @apply font-serif tracking-tight; }
+  a { @apply text-primary transition-colors hover:text-accent; }
+  ::selection { background: color-mix(in srgb, var(--color-accent) 35%, transparent); }
+
+  /* Native search clear (×) can't be restyled, so redraw it: a text-coloured × by default, an on-primary × on a primary badge on hover. */
+  input[type='search']::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 1.5rem;
+    height: 1.5rem;
+    cursor: pointer;
+    opacity: 1;
+    border-radius: 0.375rem;
+    background: transparent var(--search-clear-icon) center / 55% no-repeat;
+    transition: background-color 150ms;
+  }
+  input[type='search']::-webkit-search-cancel-button:hover {
+    background-color: var(--color-primary);
+    background-image: var(--search-clear-icon-hover);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
