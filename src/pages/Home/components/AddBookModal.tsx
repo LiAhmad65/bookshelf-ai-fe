@@ -12,6 +12,7 @@ export function AddBookModal({ onClose, onAdded }: AddBookModalProps) {
     <Modal title="Add book" onClose={onClose}>
       <BookForm
         submitLabel="Add book"
+        aiDescription
         onSubmit={async (values) => {
           await booksApi.add(values)
           onAdded()

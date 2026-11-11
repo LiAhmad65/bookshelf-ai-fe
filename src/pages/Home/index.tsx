@@ -68,7 +68,9 @@ export default function Home() {
 
   return (
     // Fills the viewport below the navbar; only the book list inside scrolls.
-    <div className="flex min-h-0 flex-1 basis-0 flex-col">
+    // pb-16 keeps the pagination bar clear of the floating chat button (LibraryChat, fixed bottom-right);
+    // from 2xl the centered content ends left of the button, so no gap is needed.
+    <div className="flex min-h-0 flex-1 basis-0 flex-col pb-16 2xl:pb-0">
       <div className="mb-8 flex shrink-0 animate-rise items-end justify-between gap-4 border-b border-border pb-5">
         <div>
           <h1 className="text-3xl font-bold text-primary sm:text-4xl">Your Library</h1>

@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Textarea } from '@/components/ui/Textarea'
 import { SparklesIcon } from '@/components/ui/icons'
-import { generateBookDescription } from '@/services/aiService'
+import { aiApi } from '@/api/ai/aiApi'
 import type { AddBookPayload } from '@/types/book'
 import { getErrorMessage } from '@/utils/getErrorMessage'
 
@@ -117,7 +117,7 @@ export function BookForm({ initialValues = empty, submitLabel, aiDescription = f
     setAiError(null)
     setAiPhase('generating')
     try {
-      const result = await generateBookDescription(name, author || undefined)
+      const result = await aiApi.generateBookDescription({ title: name, author: author || undefined })
       if (runRef.current !== run) return
       if (!result?.description) throw new Error('No description was generated. Try again.')
       if (!author && result.author) setValue('author', result.author, { shouldDirty: true, shouldValidate: true })

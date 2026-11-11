@@ -17,5 +17,6 @@ export const API_ROUTES = {
   },
   ai: {
     chat: '/ai/chat',
+    generateBookDescription: '/ai/generate-book-description',
   },
 } as const
