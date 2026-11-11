@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Brand colors from src/assets/styles/global.css: primary #8c2f39, bg #faf5ec, accent #c8963e -->
+  <rect width="64" height="64" rx="14" fill="#8c2f39"/>
+  <path d="M10 20C18 16 26 17 31 21V48C26 44 18 43 10 46Z" fill="#faf5ec"/>
+  <path d="M54 20C46 16 38 17 33 21V48C38 44 46 43 54 46Z" fill="#faf5ec"/>
+  <path d="M42 17H48V31L45 28L42 31Z" fill="#c8963e"/>
+</svg>
